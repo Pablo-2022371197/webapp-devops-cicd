@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
 const db = require('./db');
@@ -192,17 +193,25 @@ const registerRoutes = (app) => {
 
 const createApp = () => {
     const app = express();
+    app.use(cors());
     app.use(express.json());
-    registerRoutes(app);
+
+    const api = express.Router();
+    registerRoutes(api);
+    app.use('/api', api);
+
+    app.use((req, res) => {
+        res.status(404).json(formatError('Ruta no encontrada', 404));
+    });
+
     return app;
 };
 
 const createHttpServer = (port) => {
     const app = createApp();
-    app.listen(port, () => {
+    return app.listen(port, () => {
         console.log(`Servidor HTTP corriendo en el puerto ${port}`);
     });
-    return app;
 };
 
 module.exports = { createApp, createHttpServer };

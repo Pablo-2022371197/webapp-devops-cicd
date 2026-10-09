@@ -1,16 +1,20 @@
-FROM node:18-alpine
+FROM node:18-bookworm-slim AS deps
+WORKDIR /app
+COPY package.json ./
+RUN npm install --omit=dev
 
+FROM node:18-bookworm-slim
 WORKDIR /app
 
-# Copiar package.json e instalar dependencias
-COPY package*.json ./
-RUN npm install
+ENV NODE_ENV=production
+ENV HTTP_PORT=80
+ENV TCP_PORT=6061
 
-# Copiar el resto del código fuente
-COPY . .
+COPY --from=deps /app/node_modules ./node_modules
+COPY package.json ./
+COPY index.js ./
+COPY src ./src
 
-# Exponer HTTP y TCP
 EXPOSE 80 6061
 
-# Iniciar la aplicación
 CMD ["node", "index.js"]
