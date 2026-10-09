@@ -1,6 +1,12 @@
 FROM node:18-bookworm-slim AS deps
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY package.json ./
+# sqlite3 trae un binario precompilado que pide GLIBC 2.38;
+# se recompila aquí contra el glibc de bookworm (2.36).
+ENV npm_config_build_from_source=true
 RUN npm install --omit=dev
 
 FROM node:18-bookworm-slim
