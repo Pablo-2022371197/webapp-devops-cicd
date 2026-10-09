@@ -39,8 +39,8 @@ Respuesta uniforme: `{ statusCode, data }`.
 
 ## Requisitos locales
 
-- Node.js 18+
-- pnpm 11+ (o npm)
+- Node.js **22.13+** (requerido por pnpm 11 en local y en CI)
+- pnpm 11+ (o `npm test` si no usas pnpm)
 - Docker (opcional)
 
 ## Comandos locales
