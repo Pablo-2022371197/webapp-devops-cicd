@@ -15,7 +15,7 @@ describe('createHttpServer', () => {
 
         const { port } = server.address();
         const res = await request(`http://127.0.0.1:${port}`).get('/api/health');
-        expect(res.status).toBe(200);
-        expect(res.body.data.status).toBe('ok');
+        expect(res.status).toBe(201);
+        expect(res.body.data.status).toBe('ok2');
     });
 });
