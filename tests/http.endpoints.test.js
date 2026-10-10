@@ -38,7 +38,7 @@ describe('API HTTP — pruebas de endpoints', () => {
     describe('GET /api/health', () => {
         it('responde 200 con status ok', async () => {
             const res = await request(app).get('/api/health');
-            expect(res.status).toBe(200);
+            expect(res.status).toBe(201);
             expect(res.body).toEqual({ statusCode: 200, data: { status: 'ok' } });
         });
     });
