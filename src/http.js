@@ -157,7 +157,7 @@ const registerRoutes = (app) => {
     });
 
     app.get('/health', (req, res) => {
-        res.json(formatResponse({ status: 'ok' }));
+        res.json(formatResponse({ status: 'ok2' }, 201));
     });
 
     app.get('/backup', (req, res) => {
